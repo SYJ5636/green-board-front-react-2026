@@ -20,6 +20,14 @@ export default function App() {
     //   ...currentPosts,
     // ]);
   }
+ 
+  // App(토큰 보유) > Todolist(토큰 불필요) > TodoItem(토큰 불필요) > Item(토큰 필요)
+  // 위와 같이 자식에게 값 전달을 위해, 해당 값을 필요로하지 않는 컴포넌트들을 거치는 문제를 props drilling이라 함.
+  // Contect
+  // Auth(토큰 등) 정보를 Contect에 저장하고, App에서 token을 자식에게 전파해주던 방식에서
+  // token이 필요한 컴포넌트가 Contect에서 가져다 쓰는 방식으로 변경
+
+
 
   return (
     <>
