@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {Route, Routes } from "react-router-dom";
 import BoardFooter from "./components/BoardFooter";
 import BoardHeader from "./components/BoardHeader";
@@ -7,11 +7,12 @@ import PostDetail from "./components/PostDetail";
 import PostForm from "./components/PostForm";
 import Login from "./components/login";
 import "./style.css";
+import { useAuthContext } from "./useAuthContect";
 
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(() => localStorage.getItem("accessToken"));
+  const { token } = useAuthContext();
   
 
   function savePost(post) {
@@ -31,13 +32,13 @@ export default function App() {
 
   return (
     <>
-      <BoardHeader isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />
+      <BoardHeader />
       <Routes>
-        <Route path="/" element={token ? <PostList token={token}/> : <Login onLogin={setToken} />} />
-        <Route path="/posts" element={token ? <PostList token={token}/> : <Login onLogin={setToken} />} />
-        <Route path="/posts/new" element={<PostForm onSave={savePost} />} />
-        <Route path="/posts/:postId" element={token ? <PostDetail token={token}/> : <Login onLogin={setToken} />} />
-        <Route path="/login" element={<Login onLogin={setToken} />} />
+        <Route path="/" element={token ? <PostList /> : <Login />} />
+        <Route path="/posts" element={token ? <PostList /> : <Login />} />
+        <Route path="/posts/new" element={token ? <PostForm/> : <Login/> } />
+        <Route path="/posts/:postId" element={token ? <PostDetail/> : <Login />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <BoardFooter />
     </>
